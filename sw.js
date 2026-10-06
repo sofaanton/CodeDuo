@@ -1,0 +1,7 @@
+const CACHE='naryad-ai-v2';
+const ASSETS=['/','/frontend/index.html','/frontend/css/style.css','/frontend/js/app.js','/frontend/assets/icon.svg','/manifest.webmanifest'];
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',event=>{if(event.request.method!=='GET')return;const url=new URL(event.request.url);if(url.pathname.startsWith('/api/'))return;event.respondWith(caches.match(event.request).then(hit=>hit||fetch(event.request).then(response=>{if(response.ok&&url.origin===location.origin)caches.open(CACHE).then(cache=>cache.put(event.request,response.clone()));return response}).catch(()=>caches.match('/frontend/index.html'))))});
+self.addEventListener('push',event=>{let data={title:'НарядAI',body:'Новое уведомление'};try{if(event.data)data={...data,...event.data.json()}}catch{}event.waitUntil(self.registration.showNotification(data.title,{body:data.body,icon:'/frontend/assets/icon.svg',badge:'/frontend/assets/icon.svg',tag:data.tag||'naryad-ai-notification',data:{url:data.url||'/frontend/index.html'}}))});
+self.addEventListener('notificationclick',event=>{event.notification.close();event.waitUntil(clients.openWindow(event.notification.data?.url||'/frontend/index.html'))});

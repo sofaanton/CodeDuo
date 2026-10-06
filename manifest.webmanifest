@@ -1,0 +1,14 @@
+{
+  "name": "НарядAI — контроль смены",
+  "short_name": "НарядAI",
+  "description": "Мобильное рабочее место исполнителя и мастера смены",
+  "lang": "ru",
+  "start_url": "./frontend/index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#12212c",
+  "icons": [
+    {"src": "./frontend/assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}

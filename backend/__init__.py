@@ -1,0 +1,1 @@
+"""NaryadAI FastAPI backend package."""
