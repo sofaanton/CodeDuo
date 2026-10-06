@@ -53,4 +53,12 @@
 <dialog id="aiDialog"><div id="aiResult"></div></dialog>
 <dialog id="detailDialog"><div id="detailContent"></div></dialog>
 <script src="/frontend/js/app.js"></script>
-</body></html>
+</body>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW успешно зарегистрирован:', reg))
+      .catch(err => console.error('Ошибка регистрации SW:', err));
+  }
+</script>
+</html>
